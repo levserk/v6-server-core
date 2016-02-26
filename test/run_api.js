@@ -3,10 +3,13 @@
 let conf = {
     port: 8080,
     allowOrigin: true,
+    logger: {
+       priority: 4
+    },
     storage: {
         default: {
             host: 'localhost',
-            port: '27017'
+            port: 27017
         },
         games: {
             test: {},

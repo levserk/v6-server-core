@@ -1,3 +1,5 @@
+'use strict';
+
 let API = require('./lib/api/server.js'),
     Server = require('./lib/server.js');
 

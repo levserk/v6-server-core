@@ -1,0 +1,67 @@
+========================
+    socket_manager
+========================
+    SOCKETS_KEY = `ws_servers:server_${serverId}:sockets`;
+        [socketId]
+    ONLINE_KEY = `ws_servers:server_${serverId}:online`;
+
+
+========================
+    user_manager
+========================
+    sockets: `sockets:{socketId}`
+        loginData{
+            "serverId": "${serverId}",
+            "userId": "${userId}",
+            "userName": "${userName}",
+            "game": "${game}"
+        }
+    user_sockets: `user_sockets:{game}`
+        userId: `{
+            "socketId"
+            "serverId"
+        }`
+
+    user_data: `user_data:{game}:{userId}`
+        "userData"
+
+
+    userlist: `userlist:{game}`
+        userData {
+            userId,
+            userName,
+            mode#1 {
+                rating
+            }
+        }
+========================
+    chat_manager
+========================
+
+
+
+========================
+    invite_manager
+========================
+    messages: `invites_list:{game}` []
+    current:  `invites_current:{game}` "json"
+    invites:  `invites:{game}:{userId}` "invited_userId"
+    waiting:  `waiting:{game}`
+                    { "mode": "userId" }
+
+========================
+    game_manager
+========================
+    messages: `game_events_list:{game}:{room}` []
+    current:  `game_events_current:{game}{room}` "json"
+
+    user_room: `user_rooms:{game}:{userId}`
+                        {"roomId": ""
+                        {"type": "player"/"spectator"}
+    room: `rooms:{game}{roomId}`
+        room: {
+            id
+            players
+            ...
+            game: 'game'
+        }

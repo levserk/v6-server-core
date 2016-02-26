@@ -1,0 +1,19 @@
+game: {
+    modes: {
+        modeName {
+
+        }
+    }
+    initData: {
+        saveHistory: true,
+        saveRating: true,
+        turnTime: 60000,
+        timeMode: 'reset_every_switch',
+        timeStartMode: 'after_switch',
+        addTime: 0,
+        takeBacks: 0,
+        maxTimeouts: 1,
+        minTurns: 0
+    }
+}
+

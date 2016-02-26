@@ -1,0 +1,17 @@
+========================
+    socket_manager
+========================
+    `socket_disconnect`
+        {
+            socket || sockets,
+            reason
+        }
+    `socket_server_closed`
+    `socket_send`
+
+
+========================
+    user_manager
+========================
+    `send_to_socket_{serverId}`
+    `user_send_{message.module}`

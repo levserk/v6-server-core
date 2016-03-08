@@ -8,7 +8,7 @@ let conf = {
 
     },
     memory: {
-
+        clear: true
     },
     managers: [
         {

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+            <meta charset="utf-8">
+            <title>StepByStep</title>
+            <link rel="stylesheet" href="//logic-games.spb.ru/v6-game-client/build/v6-game-client.css"/>
+            <script src="//logic-games.spb.ru/v6-game-client/app/lib/jquery-2.1.1.min.js"></script>
+            <script src="//logic-games.spb.ru/v6-game-client/app/lib/jquery-ui.js"></script>
+            <script src="//logic-games.spb.ru/v6-game-client/app/lib/underscore-min.js"></script>
+            <script src="//logic-games.spb.ru/v6-game-client/app/lib/backbone-min.js"></script>
+            <script src="//logic-games.spb.ru/v6-game-client/build/v6-game-client.js"></script>
+        </head>
+<body>
+<div id="userListDiv"></div>
+<div id="chatDiv"></div>
+<div id="ratingDiv" style="width: 700px; background: white; margin: 10px;"></div>
+<div id="historyDiv"></div>
+
+<script>
+    console.log('app start');
+
+    var settingsTemplate = '<div><p>Цвет</p> <div> <label><input type="radio" name="color" value="red" >красный</label> <label><input type="radio" name="color" value="black" >черный</label> </div> </div> <p>Настройки игры</p> <div> <div class="option"> <label><input type="checkbox" name="sounds"> Включить звук</label> </div> <div class="option"> <label><input type="checkbox" name="disableInvite"> Запретить приглашать меня в игру</label> </div></div>';
+
+    var userId = getCookie('_userId') || Math.random()*1000 ^ 0;
+    var userName = 'Гость ' + userId;
+    var sign = userId + userName;
+    var user = {
+        userId: userId,
+        userName: userName,
+        sign: sign
+    };
+
+    window.LogicGame = {isSuperUser:function(){return true;}};
+
+    window._client = new Client({
+        game: 'test2',
+        port: 8078,
+        resultDialogDelay: 1000,
+        reload: true,
+        autoShowProfile: true,
+        idleTimeout: 0,
+        getUserParams: function(){
+            var inviteData = {
+                gameType:'Main Mode',
+                val: Math.random()* 1000 ^ 0
+            };
+            console.log('TEST!', inviteData);
+            return inviteData
+        },
+        generateInviteText: function(invite){
+            return 'Вас пригласил пользователь ' + invite.from.userName + '(' + invite.from.getRank(invite.data.mode)+ ' место в рейтинге)'
+                    + ' в игру ' + invite.data.gameType + ' в режим ' + _client.getModeAlias(invite.data.mode);
+        },
+        initRating: function(conf){
+            conf.columns.splice(conf.columns.length-1, 0, {
+                id:'score', source:'score', title:'Очки', canOrder:true, undef: 100,
+                func: function(value) { return value * 10 }
+            });
+            return conf;
+        },
+        initHistory: function(conf){
+            conf.columns.push({
+                id:'score', source:'score', title:'Очки', undef: 100
+            });
+            return conf;
+        },
+        generatePenaltyText: function(penalty){
+            if (penalty.type == 1){
+                return 'штраф за отсутствие игр в ' + Math.abs(penalty.value) + ' очков';
+            }
+            return '';
+        },
+        blocks:{
+            userListId:'userListDiv',
+            chatId:'chatDiv',
+            ratingId:'ratingDiv',
+            historyId:'ratingDiv',
+            profileId:'ratingDiv'
+        },
+        settings:{
+            color: 'red',
+            sounds: false
+        },
+        settingsTemplate: settingsTemplate
+    }).init(user);
+
+    var _client = window._client;
+    _client.on('login', function(data){
+        console.log('main;', 'login', data.userId, data.userName);
+        var you =  _client.getPlayer();
+    });
+
+    _client.gameManager.on('game_start', function(data){
+        console.log('main;','game_start, room: ', data);
+    });
+
+    _client.gameManager.on('round_start', function(data){
+        console.log('main;','round_start, room: ', data);
+    });
+
+    _client.gameManager.on('turn', function(data){
+        console.log('main;','turn', data.turn, 'is your turn: ', data.user == _client.getPlayer().userId);
+    });
+
+    _client.gameManager.on('switch_player', function(data){
+        console.log('main;','switch_player', 'next: ', data, 'your next: ', data.userId == _client.getPlayer().userId);
+    });
+
+    _client.gameManager.on('event', function(data){
+        console.log('main;','event', data);
+    });
+
+    _client.gameManager.on('timeout', function(data){
+        console.log('main;','timeout', 'user: ', data.user, 'is your timeout: ', data.user == _client.getPlayer());
+    });
+
+    _client.gameManager.on('round_end', function(data){
+        console.log('main;','round_end', data, 'your win: ', data.winner == _client.getPlayer().userId);
+    });
+
+    _client.gameManager.on('game_leave', function(data){
+        console.log('main;','game_leave room:', data);
+    });
+
+    _client.gameManager.on('game_load', function(data){
+        console.log('main;','game_loaded, game history:', data);
+    });
+
+    _client.gameManager.on('take_back', function(data){
+        console.log('main;','take_back user: ', data.user, 'history:', data.history);
+    });
+
+    _client.gameManager.on('time', _.throttle(function(data){
+        //console.log('main;','time user:', data);
+    }, 1000, {trailing: false}));
+
+
+    _client.gameManager.on('focus', function(data){
+        //console.log('main;', 'user changed window focus, window has focus:', data.windowHasFocus, ' user: ', data.user);
+    });
+
+
+    _client.historyManager.on('game_load', function(game){
+        console.log('main;','history game loaded, game:', game);
+    });
+
+    _client.on('show_profile', function(data){
+        console.log('main;','show_profile user:', data);
+    });
+
+    _client.on('settings_changed', function(data){
+        console.log('main;','settings_changed property:', data);
+    });
+
+    _client.on('settings_saved', function(data){
+        console.log('main;','settings_changed settings:', data);
+    });
+
+
+    // send events buttons example
+    _generateEndGameBtn();
+
+    function _generateEndGameBtn() {
+        var bdiv = $('<div>');
+        bdiv.addClass('v6-buttons');
+        $('body').append(bdiv);
+
+        var div = $('<div>');
+        div.attr('id', 'endGameButton');
+        div.html('<span>Выйти из игры</span>');
+        div.on('click', function () {
+            window._client.gameManager.leaveGame();
+        });
+        bdiv.append(div);
+
+        div = $('<div>');
+        div.attr('id', 'drawButton');
+        div.html('<span>Предложить ничью</span>');
+        div.on('click', function () {
+            window._client.gameManager.sendDraw();
+        });
+        bdiv.append(div);
+
+        div = $('<div>');
+        div.attr('id', 'winButton');
+        div.html('<span>Победный ход</span>');
+        div.on('click', function () {
+            window._client.gameManager.sendTurn({result:1});
+        });
+        bdiv.append(div);
+
+        div = $('<div>');
+        div.attr('id', 'ratingButton');
+        div.html('<span>Показать рейтинг</span>');
+        div.on('click', function () {
+            window._client.ratingManager.getRatings();
+        });
+        bdiv.append(div);
+
+        div = $('<div>');
+        div.attr('id', 'historyButton');
+        div.html('<span>Показать историю</span>');
+        div.on('click', function () {
+            window._client.historyManager.getHistory(false, false, false);
+        });
+        bdiv.append(div);
+
+        div = $('<div>');
+        div.html('<span>Передать ход</span>');
+        div.on('click', function () {
+            window._client.gameManager.sendTurn({'switch': true});
+        });
+        bdiv.append(div);
+
+        div = $('<div>');
+        div.html('<span>Сделать ход</span>');
+        div.on('click', function () {
+            window._client.gameManager.sendTurn({'t': (new Date).getSeconds});
+        });
+        bdiv.append(div);
+
+        div = $('<div>');
+        div.html('<span>ход назад</span>');
+        div.on('click', function () {
+            window._client.gameManager.sendTakeBack();
+        });
+        bdiv.append(div);
+
+    }
+
+    function getCookie(c_name)
+    {
+        if (document.cookie.length>0)
+        {
+            c_start=document.cookie.indexOf(c_name + "=");
+            if (c_start!=-1)
+            {
+                c_start=c_start + c_name.length+1;
+                c_end=document.cookie.indexOf(";",c_start);
+                if (c_end==-1) c_end=document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end));
+            }
+        }
+        return "";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+========================
+    game_manager
+========================
+ {
+ "module":"game_manager",
+ "type":"ready",
+ "target":"server",
+ "data":true,
+ "sender":{
+     "userId":"448039",
+     "userName":"Гость 448039",
+     "isActive":true,
+     "disableInvite":false,
+     "dateCreate":1457515367369,
+     "default":{"win":0,"lose":0,"draw":0,"games":0,"rank":0,"ratingElo":1600,"timeLastGame":0}
+     },
+ "game":"test2",
+ "room":{
+     "roomId":"test2_default_784_mVUHflcsfcm8LFr1Y9mAtQ==_12:28:40",
+     "role":"player",
+     "type":"multi"
+     }
+ }
+
+========================
+    invite_manager
+========================
+ {
+ "module":"invite_manager",
+ "type":"invite",
+ "target":"784",
+ "data":{
+    "gameType":
+    "Main Mode",
+    "val":102,
+    "mode":"default",
+    "target":"784"
+    },
+ "sender":{
+    "userId":"448039",
+    "userName":"Гость 448039",
+    "isActive":true,
+    "disableInvite":false,
+    "dateCreate":1457516604504,
+    "default":{"win":0,"lose":0,"draw":0,"games":0,"rank":0,"ratingElo":1600,"timeLastGame":0}
+    },
+"game":"test2"
+}

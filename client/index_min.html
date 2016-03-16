@@ -184,6 +184,14 @@
         bdiv.append(div);
 
         div = $('<div>');
+        div.attr('id', 'drawButton');
+        div.html('<span>Сдаться</span>');
+        div.on('click', function () {
+            window._client.gameManager.sendThrow();
+        });
+        bdiv.append(div);
+
+        div = $('<div>');
         div.attr('id', 'winButton');
         div.html('<span>Победный ход</span>');
         div.on('click', function () {

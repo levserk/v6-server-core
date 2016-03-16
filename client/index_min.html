@@ -41,6 +41,7 @@
         autoShowProfile: true,
         idleTimeout: 0,
         apiEnable: true,
+        api: '//localhost:8080/',
         getUserParams: function(){
             var inviteData = {
                 gameType:'Main Mode',
@@ -132,9 +133,15 @@
         console.log('main;','take_back user: ', data.user, 'history:', data.history);
     });
 
-    _client.gameManager.on('time', _.throttle(function(data){
-        //console.log('main;','time user:', data);
-    }, 1000, {trailing: false}));
+    _client.gameManager.on('time', function(data){
+        var html = (data.user ? ((data.user.isPlayer ? 'Ваш ход' : 'Ход соперника')) : 'Time: ') + ' ' + data.userTimeFormat;
+        html += '<br>';
+        html += 'мое общее время: ' + data.userTotalTime.timeFormat;
+        html += '<br>';
+        html += 'Общее время: ' + data.totalTime.timeFormat;
+        html += 'Время раунда: ' + data.roundTime.timeFormat;
+        $('#time').html(html)
+    });
 
 
     _client.gameManager.on('focus', function(data){
@@ -234,6 +241,10 @@
         div.on('click', function () {
             window._client.gameManager.sendTakeBack();
         });
+        bdiv.append(div);
+
+        div = $('<div>');
+        div.attr('id', 'time');
         bdiv.append(div);
 
     }

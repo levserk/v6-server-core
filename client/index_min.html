@@ -22,7 +22,8 @@
 
     var settingsTemplate = '<div><p>Цвет</p> <div> <label><input type="radio" name="color" value="red" >красный</label> <label><input type="radio" name="color" value="black" >черный</label> </div> </div> <p>Настройки игры</p> <div> <div class="option"> <label><input type="checkbox" name="sounds"> Включить звук</label> </div> <div class="option"> <label><input type="checkbox" name="disableInvite"> Запретить приглашать меня в игру</label> </div></div>';
 
-    var userId = getCookie('_userId') || Math.random()*1000 ^ 0;
+    var userId = getCookie('_userId');
+    if (!userId || userId == "undefined") userId = Math.random()*1000 ^ 0;
     var userName = 'Гость ' + userId;
     var sign = userId + userName;
     var user = {

@@ -2,7 +2,8 @@
 
 let gameConf = {
         logger: {
-            priority: 3
+            priority: 3,
+            showOnly: ['GameManager', 'UserManager']
         },
         taskQueue: {},
         mongoStorage: {},
@@ -30,7 +31,7 @@ let gameConf = {
     },
     socketConf = {
         logger: {
-            priority: 1
+            priority: 0
         },
         taskQueue: {},
         mongoStorage: {},
@@ -50,7 +51,7 @@ let gameConf = {
         port: 8080,
         allowOrigin: true,
         logger: {
-            priority: 1
+            priority: 0
         },
         storage: {
             default: {

@@ -34,6 +34,9 @@
                 rating
             }
         }
+     messages:  `user_messages_list:${game}:${userId}`
+     current:   `user_messages_current:${game}:${userId}`
+
 ========================
     chat_manager
 ========================
@@ -45,6 +48,7 @@
 ========================
     messages: `invites_list:{game}` []
     current:  `invites_current:{game}` "json"
+
     invites:  `invites:{game}:{userId}` "invited_userId"
     waiting:  `waiting:{game}`
                     { "mode": "userId" }

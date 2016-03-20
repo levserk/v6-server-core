@@ -1,12 +1,12 @@
 'use strict';
 
-let conf = {
+let apiConf = {
     port: 8080,
     allowOrigin: true,
     logger: {
-       priority: 4
+        priority: 1
     },
-    storage: {
+    mongoStorage: {
         default: {
             host: 'localhost',
             port: 27017
@@ -18,5 +18,6 @@ let conf = {
     }
 };
 
-let Server = require('../lib/api/server.js');
-let server = new Server(conf);
+let ApiServer = require('../lib/apiServer/apiServer.js'),
+    apiServer = new ApiServer(apiConf);
+apiServer.start();

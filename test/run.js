@@ -3,7 +3,7 @@
 let gameConf = {
         logger: {
             priority: 3,
-            showOnly: ['GameManager', 'UserManager']
+            showOnly: ['GameManager']
         },
         taskQueue: {},
         mongoStorage: {},

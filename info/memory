@@ -62,10 +62,10 @@
     user_room: `user_rooms:{game}:{userId}`
                         {"roomId": ""
                         {"type": "player"/"spectator"}
-    room: `rooms:{game}{roomId}`
-        room: {
+    room: `rooms:{game}}`
+        roomId: '{
             id
             players
             ...
             game: 'game'
-        }
+        }'

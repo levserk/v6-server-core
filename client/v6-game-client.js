@@ -787,7 +787,7 @@ define('modules/game_manager',['EE', 'instances/room', 'instances/turn', 'instan
         var turn = this.getLastTurn(),
             userTurnTime = turn ? turn.userTurnTime : room.userTurnTime;
             userTurnTime = userTurnTime < 0 ? 0 :userTurnTime;
-        this.switchPlayer(turn ? this.getPlayer(data.nextPlayer) : room.current, data.userTime + (Date.now() - timeStart),userTurnTime);
+        this.switchPlayer(this.getPlayer(data.nextPlayer), data.userTime + (Date.now() - timeStart),userTurnTime);
     };
 
 

@@ -11,7 +11,9 @@
     "redis": "*",
     "ws": "*",
     "co": "*",
-    "json8": "*"
+    "json8": "*",
+    "koa" : "*",
+    "koa-router": "*"
   },
   "repository": {
     "type": "git",

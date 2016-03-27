@@ -1,0 +1,20 @@
+========================
+        history
+========================
+GET /:game/history/?:query
+GET /:game/history/game?:query
+PUT /:game/history/game
+
+========================
+        users
+========================
+GET /:game/users/user?:query
+GET /:game/users/ratings?:query
+POST /:game/users/user
+
+========================
+        chat
+========================
+GET /:game/chat/messages?:query
+PUT /:game/chat/message?:query
+DEL /:game/chat/message?:query

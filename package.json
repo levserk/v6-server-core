@@ -13,7 +13,8 @@
     "co": "*",
     "json8": "*",
     "koa" : "*",
-    "koa-router": "*"
+    "koa-router": "*",
+    "koa-logger": "*"
   },
   "repository": {
     "type": "git",

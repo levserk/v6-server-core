@@ -65,17 +65,14 @@ let gameConf = {
         }
     };
 
-
 let ApiServer = require('../lib/apiServer/apiServer.js'),
     SocketServer = require('../lib/socketServer/socketServer.js'),
     GameServer = require('../lib/gameServer/gameServer.js'),
     co = require('co');
 
-
 let apiServer = new ApiServer(apiConf),
     socketServer = new SocketServer(socketConf),
     gameServer = new GameServer(gameConf);
-
 
 co(function* () {
     yield apiServer.start();

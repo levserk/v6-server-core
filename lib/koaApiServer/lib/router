@@ -16,5 +16,6 @@ POST /:game/users/user
         chat
 ========================
 GET /:game/chat/messages?:query
+GET /:game/chat/ban?:query
 PUT /:game/chat/message?:query
 DEL /:game/chat/message?:query

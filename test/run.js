@@ -3,7 +3,7 @@
 let gameConf = {
         logger: {
             priority: 3,
-            showOnly: ['GameManager', 'Engine']
+            //showOnly: ['GameManager', 'Engine']
         },
         taskQueue: {},
         mongoStorage: {},
@@ -70,17 +70,12 @@ let ApiServer = require('../lib/apiServer/apiServer.js'),
     GameServer = require('../lib/gameServer/gameServer.js'),
     co = require('co');
 
-let apiServer = new ApiServer(apiConf),
-    socketServer = new SocketServer(socketConf),
-    gameServer = new GameServer(gameConf);
+let apiServer = new ApiServer(apiConf);
+let socketServer = new SocketServer(socketConf);
+let gameServer = new GameServer(gameConf);
 
 co(function* () {
     yield apiServer.start();
     yield socketServer.start();
     yield gameServer.start();
-}).then(() => {
-
-}).catch((e)=>{
-    console.log(e);
-    process.exit(1);
 });

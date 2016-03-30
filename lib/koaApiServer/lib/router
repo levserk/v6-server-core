@@ -1,21 +1,21 @@
 ========================
         history
 ========================
-GET /:game/history/?:query
-GET /:game/history/game?:query
+GET /:game/history/?mode=&userId=&count=&offset=&filter=
+GET /:game/history/game?mode=&userId=&gameId=
 PUT /:game/history/game
 
 ========================
         users
 ========================
-GET /:game/users/user?:query
-GET /:game/users/ratings?:query
+GET /:game/users/user?userId=
+GET /:game/users/ratings?mode=&column=&order=&count=&offset=&filter=
 POST /:game/users/user
 
 ========================
         chat
 ========================
-GET /:game/chat/messages?:query
-GET /:game/chat/ban?:query
+GET /:game/chat/messages?time=&target=&sender=&count=
+GET /:game/chat/ban?userId=
 PUT /:game/chat/message?:query
 DEL /:game/chat/message?:query
